@@ -19,6 +19,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.preference.Preference;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.Gravity;
@@ -28,6 +30,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -73,6 +76,7 @@ public class TrackingMainViewActivity extends Activity {
     static final String STATE_TIME = "trackingTime";
     static final String STATE_TRACK = "trackingStatus";
     static final String MAP_URL = "mapUrl";
+    static final String STATE_FENCE = "trackingFence";
     public static final String FIRST_RUN = "first";
     private boolean first;
 
@@ -92,6 +96,9 @@ public class TrackingMainViewActivity extends Activity {
 
     EditText name;
     EditText phone;
+    CheckBox chk;  //new0422
+    boolean isCheckFence = false;
+
 
     Button btnMapOpen;
     Button btnTrackStart;
@@ -132,6 +139,10 @@ public class TrackingMainViewActivity extends Activity {
 
         name = (EditText) findViewById(R.id.inputName);
         phone = (EditText) findViewById(R.id.inputPhone);
+        chk = (CheckBox) findViewById(R.id.checkBox_fence);
+        chk.setChecked(false);
+
+        Log.d("onCreate","Check Fence:"+name+isCheckFence);
 
         spnTimeSelector = (Spinner) findViewById(R.id.timeSelector);
 
@@ -178,7 +189,6 @@ public class TrackingMainViewActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-
         if(broadcastReceiver == null) {
             broadcastReceiver = new BroadcastReceiver() {
                 @Override
@@ -213,9 +223,11 @@ public class TrackingMainViewActivity extends Activity {
     }
 
     public void saveData() {
+        isCheckFence = ((CheckBox) findViewById(R.id.checkBox_fence)).isChecked();
         settings.edit()
                 .putString(STATE_NAME, name.getText().toString())
                 .putString(STATE_PHONE, phone.getText().toString())
+                .putBoolean(STATE_FENCE, isCheckFence)
                 .putString(STATE_TIME, sel)
                 .putBoolean(STATE_TRACK, isTrackingStart)
                 .putBoolean(FIRST_RUN, false)
@@ -226,11 +238,11 @@ public class TrackingMainViewActivity extends Activity {
     }
 
     public void readData() {
-        Log.v("readData", String.valueOf(settings));
+        Log.v("readData", "last setting are: "+ String.valueOf(settings)); //new0422
 
         name.setText(settings.getString(STATE_NAME, ""));
         phone.setText(settings.getString(STATE_PHONE, ""));
-
+        chk.setChecked(settings.getBoolean(STATE_FENCE, false));
         sel = settings.getString(STATE_TIME, "");
         int selectionPosition= adapterMins.getPosition(sel);
         spnTimeSelector.setSelection(selectionPosition);
@@ -370,6 +382,7 @@ public class TrackingMainViewActivity extends Activity {
         String last_three_number = trackingPhone.substring(trackingPhone.length()-3,trackingPhone.length());
         Integer allow_fence_track = 0;
         Boolean isChecked = ((CheckBox) findViewById(R.id.checkBox_fence)).isChecked();
+        isCheckFence = ((CheckBox) findViewById(R.id.checkBox_fence)).isChecked();
         if(isChecked) {
             allow_fence_track = 1;
         }

@@ -166,7 +166,7 @@ public class TrackingService extends Service {
         timeBuilder = new Notification.Builder(this)
                 .setSmallIcon(R.mipmap.iottalk_icon)
                 .setColor(ContextCompat.getColor(this, R.color.iottalk_icon_color))
-                .setContentTitle("Tracking Remaining Time")
+                .setContentTitle("Remaining Tracking Time")
                 .setContentText("")
                 .setChannelId(CHANNEL_ID)
                 .setPriority(Notification.PRIORITY_MAX)

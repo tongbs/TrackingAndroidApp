@@ -27,7 +27,7 @@
 
             <RelativeLayout
                 android:id="@+id/relativeLayout"
-                android:layout_width="318dp"
+                android:layout_width="340dp"
                 android:layout_height="229dp"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
@@ -124,7 +124,7 @@
                     android:layout_below="@+id/trackingTime"
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="16dp"
-                    android:text="Allow tracked by the fence application" />
+                    android:text="Tracking for electronic fence" />
 
             </RelativeLayout>
 
@@ -149,7 +149,7 @@
                 android:layout_marginBottom="174dp"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/tracking_corners"
-                android:text="open Map"
+                android:text="Open Map"
                 android:textAllCaps="false"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
         </RelativeLayout>
