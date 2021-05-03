@@ -414,7 +414,7 @@ public class TrackingMainViewActivity extends Activity {
                 int resCode;
                 InputStream in;
                 try {
-                    URL url = new URL(setIdUrlAddress+"?app=HumanTracking&name="+trackingName);
+                    URL url = new URL(setIdUrlAddress+"?app=Tracking&name="+trackingName);
                     Log.i("set_tracking_id", url.toString());
                     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                     conn.setAllowUserInteraction(false);
